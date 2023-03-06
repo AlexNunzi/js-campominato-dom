@@ -69,8 +69,14 @@ main{
 }
 
 .container{
-    width: 768px;
+    width: 1170px;
     margin: auto;
+}
+
+#gridContainer{
+    margin: 0 auto;
+    width: 400px;
+    height: 400px;
 }
 
 .box{
@@ -81,18 +87,18 @@ main{
 }
 
 .easy{
-    width: calc(768px / 10);
-    height: calc(768px / 10);
+    width: calc(100% / 10);
+    height: calc(100% / 10);
 }
 
 .normal{
     width: calc(100% / 9);
-    height: calc(768px / 9);
+    height: calc(100% / 9);
 }
 
 .hard{
     width: calc(100% / 7);
-    height: calc(768px / 7);
+    height: calc(100% / 7);
 }
 
 .selected{

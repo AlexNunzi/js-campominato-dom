@@ -1,7 +1,6 @@
 const startGameDom = document.querySelector('#startGame');
 const gridContainerDom = document.querySelector('#gridContainer');
 const difficultSelectorDom = document.querySelector('#difficultSelector');
-let boxNumber = 0;
 
 console.log("Il valore di difficoltà selezionato è: " + difficultSelectorDom.value);
 
@@ -14,6 +13,7 @@ startGameDom.addEventListener('click', function(){
     console.log(gridContainerDom.innerHTML);
 
     let boxDimension = '';
+    let boxNumber = 0;
 
     switch(difficultSelectorDom.value){
         case '1':
@@ -33,15 +33,7 @@ startGameDom.addEventListener('click', function(){
             break;
     }
 
-    for(i=1 ; i <= boxNumber ; i++){
-        const box = createNewBoxNumbered(i);
-        box.classList.add(boxDimension);
-        box.addEventListener('click', function(){
-            console.log(box.textContent);
-            this.classList.add('selected');
-        });
-        gridContainerDom.append(box);
-    }
+    createGameField(boxNumber, boxDimension);
 });
 
 
@@ -52,7 +44,19 @@ startGameDom.addEventListener('click', function(){
 function createNewBoxNumbered(number){
     const newBox = document.createElement('div');
     newBox.classList.add('box');
-    newBox.innerHTML = number;
+    newBox.innerHTML = `<div>${number}</div>`;
+    newBox.addEventListener('click', function(){
+        console.log(number);
+        this.classList.add('selected');
+    });
     return newBox;
+}
+
+function createGameField(number, dimension){
+    for(i=1 ; i <= number ; i++){
+        const box = createNewBoxNumbered(i);
+        box.classList.add(dimension);
+        gridContainerDom.append(box);
+    }
 }
 
