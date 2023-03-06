@@ -1,6 +1,7 @@
 const startGameDom = document.querySelector('#startGame');
 const gridContainerDom = document.querySelector('#gridContainer');
 const difficultSelectorDom = document.querySelector('#difficultSelector');
+const instructionDom = document.querySelector ('#instruction');
 
 console.log("Il valore di difficoltà selezionato è: " + difficultSelectorDom.value);
 
@@ -11,6 +12,8 @@ startGameDom.addEventListener('click', function(){
     console.log(gridContainerDom.innerHTML);
     gridContainerDom.innerHTML = '';
     console.log(gridContainerDom.innerHTML);
+
+    instructionDom.classList.add('d-none');
 
     let boxDimension = '';
     let boxNumber = 0;
