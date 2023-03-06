@@ -3,7 +3,9 @@ const gridContainerDom = document.querySelector('#gridContainer');
 const difficultSelectorDom = document.querySelector('#difficultSelector');
 const instructionDom = document.querySelector ('#instruction');
 const scoreDom = document.querySelector ('#score');
-const scoreNumberDom = document.querySelector ('#scoreNumber')
+const scoreNumberDom = document.querySelector ('#scoreNumber');
+const winDom = document.querySelector ('#win');
+
 
 
 console.log("Il valore di difficoltà selezionato è: " + difficultSelectorDom.value);
@@ -16,11 +18,12 @@ startGameDom.addEventListener('click', function(){
 
     instructionDom.classList.add('d-none');
     scoreDom.classList.remove('d-none');
+    winDom.classList.add('d-none');
+    scoreNumberDom.innerHTML = 0;
 
     let boxDimension = '';
     let boxNumber = 0;
     let bombsArray = [];
-    let score = 0;
     const numberOfBombs = 16;
 
     switch(difficultSelectorDom.value){
@@ -43,7 +46,7 @@ startGameDom.addEventListener('click', function(){
 
     bombsArray = createArrayOfNumber(numberOfBombs, 1, boxNumber);
     console.log("L'array di bombe risultante dopo la generazione è: " + bombsArray);
-    createGameField(boxNumber, boxDimension, bombsArray, score);
+    createGameField(boxNumber, boxDimension, bombsArray, numberOfBombs);
 });
 
 
@@ -51,26 +54,30 @@ startGameDom.addEventListener('click', function(){
 
 
 
-function createNewBoxNumbered(number, numberedBombs, scorePrinter){
+function createNewBoxNumbered(progressiveNumber, numberedBombs, boxNumber, numberOfBombs){
     const newBox = document.createElement('div');
     newBox.classList.add('box');
-    newBox.innerHTML = `<div>${number}</div>`;
+    newBox.innerHTML = `<div>${progressiveNumber}</div>`;
     newBox.addEventListener('click', function bombcheck(){
-        if(numberedBombs.includes(number)){
+        if(numberedBombs.includes(progressiveNumber)){
             this.classList.add('exploded');
+            clearEventListenerByClass('.box', gridContainerDom);
         } else {
             this.classList.add('selected');
-            scorePrinter++;
             scoreNumberDom.innerHTML++;
+            if(scoreNumberDom.innerHTML == (boxNumber - numberOfBombs)){
+                winDom.classList.remove('d-none');
+                clearEventListenerByClass('.box', gridContainerDom);
+            }
         }
         this.removeEventListener('click', bombcheck);
     });
     return newBox;
 }
 
-function createGameField(number, dimension, numberedBombs, scorePrinter){
+function createGameField(number, dimension, numberedBombs, numberOfBombs){
     for(i=1 ; i <= number ; i++){
-        const box = createNewBoxNumbered(i, numberedBombs, scorePrinter);
+        const box = createNewBoxNumbered(i, numberedBombs, number, numberOfBombs);
         box.classList.add(dimension);
         gridContainerDom.append(box);
     }
@@ -103,4 +110,12 @@ function createArrayOfNumber(arrayDimension, min, max){
     }
     console.log("L'array di numeri generato da createArrayOfNumber è: " + stockingArray);
     return stockingArray;
+}
+
+function clearEventListenerByClass(className, domContainer){
+    let elements = document.querySelectorAll(className);
+    domContainer.innerHTML = '';
+    for(i=0; i < elements.length; i++){
+        domContainer.append(elements[i].cloneNode(true));
+    }
 }

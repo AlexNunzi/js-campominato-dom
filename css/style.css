@@ -11,6 +11,7 @@
     --grid-border: #000000;
     --selected-item: #00ffff;
     --exploded-bomb: #ff0000;
+    --win: #ED6900;
 }
 
 /* REGOLE CSS ---------------------------------------- */
@@ -86,6 +87,11 @@ main{
     margin: 20px auto;
     width: 400px;
     height: 400px;
+}
+
+#win{
+    color: var(--win);
+    font-size: 3rem;
 }
 
 .box{
