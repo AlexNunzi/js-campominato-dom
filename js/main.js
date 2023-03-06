@@ -23,6 +23,9 @@ startGameDom.addEventListener('click', function(){
     winDom.classList.add('d-none');
     loseDom.classList.add('d-none');
     finalScoreDom.classList.add('d-none');
+    gridContainerDom.classList.remove('gameOver');
+
+
     scoreNumberDom.innerHTML = 0;
 
     let boxDimension = '';
@@ -63,7 +66,7 @@ startGameDom.addEventListener('click', function(){
 function createNewBoxNumbered(progressiveNumber, numberedBombs, boxNumber, numberOfBombs){
     const newBox = document.createElement('div');
     newBox.classList.add('box');
-    newBox.innerHTML = `<div>${progressiveNumber}</div>`;
+    // newBox.innerHTML = `<div>${progressiveNumber}</div>`;
     if(numberedBombs.includes(progressiveNumber)){
         newBox.classList.add('bomb');
     }
@@ -133,6 +136,7 @@ function createArrayOfNumber(arrayDimension, min, max){
 
 function clearEventListenerByClass(className, domContainer){
     let elements = document.querySelectorAll(className);
+    console.log(elements);
     domContainer.innerHTML = '';
     for(i=0; i < elements.length; i++){
         domContainer.append(elements[i].cloneNode(true));
