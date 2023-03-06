@@ -29,6 +29,7 @@ startGameDom.addEventListener('click', function(){
     let boxNumber = 0;
     let bombsArray = [];
     const numberOfBombs = 16;
+    let gameField = [];
 
     switch(difficultSelectorDom.value){
         case '1':
@@ -50,7 +51,8 @@ startGameDom.addEventListener('click', function(){
 
     bombsArray = createArrayOfNumber(numberOfBombs, 1, boxNumber);
     console.log("L'array di bombe risultante dopo la generazione è: " + bombsArray);
-    createGameField(boxNumber, boxDimension, bombsArray, numberOfBombs);
+    gameField = createGameField(boxNumber, boxDimension, bombsArray, numberOfBombs);
+    refreshGameField(gameField, gridContainerDom);
 });
 
 
@@ -62,9 +64,13 @@ function createNewBoxNumbered(progressiveNumber, numberedBombs, boxNumber, numbe
     const newBox = document.createElement('div');
     newBox.classList.add('box');
     newBox.innerHTML = `<div>${progressiveNumber}</div>`;
+    if(numberedBombs.includes(progressiveNumber)){
+        newBox.classList.add('bomb');
+    }
     newBox.addEventListener('click', function bombcheck(){
         if(numberedBombs.includes(progressiveNumber)){
             this.classList.add('exploded');
+            gridContainerDom.classList.add('gameOver');
             loseDom.classList.remove('d-none');
             finalScoreDom.classList.remove('d-none');
             scoreDom.classList.add('d-none');
@@ -86,11 +92,14 @@ function createNewBoxNumbered(progressiveNumber, numberedBombs, boxNumber, numbe
 }
 
 function createGameField(number, dimension, numberedBombs, numberOfBombs){
+    let boxContainer = [];
     for(i=1 ; i <= number ; i++){
         const box = createNewBoxNumbered(i, numberedBombs, number, numberOfBombs);
         box.classList.add(dimension);
-        gridContainerDom.append(box);
+        boxContainer.push(box);
     }
+    console.log(boxContainer);
+    return boxContainer;
 }
 
 function randomNumber(min, max){
@@ -127,5 +136,12 @@ function clearEventListenerByClass(className, domContainer){
     domContainer.innerHTML = '';
     for(i=0; i < elements.length; i++){
         domContainer.append(elements[i].cloneNode(true));
+    }
+}
+
+function refreshGameField(elementsArray, domContainer){
+    domContainer.innerHTML = '';
+    for(i=0; i < elementsArray.length; i++){
+    domContainer.append(elementsArray[i]);
     }
 }

@@ -128,6 +128,10 @@ main{
     background-color: var(--selected-item);
 }
 
+.gameOver .bomb{
+    background-color: var(--exploded-bomb);
+}
+
 .exploded{
     background-color: var(--exploded-bomb);
 }
