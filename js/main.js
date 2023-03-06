@@ -5,6 +5,8 @@ const instructionDom = document.querySelector ('#instruction');
 const scoreDom = document.querySelector ('#score');
 const scoreNumberDom = document.querySelector ('#scoreNumber');
 const winDom = document.querySelector ('#win');
+const loseDom = document.querySelector ('#lose');
+const finalScoreDom = document.querySelector ('.finalScore');
 
 
 
@@ -19,6 +21,8 @@ startGameDom.addEventListener('click', function(){
     instructionDom.classList.add('d-none');
     scoreDom.classList.remove('d-none');
     winDom.classList.add('d-none');
+    loseDom.classList.add('d-none');
+    finalScoreDom.classList.add('d-none');
     scoreNumberDom.innerHTML = 0;
 
     let boxDimension = '';
@@ -61,16 +65,22 @@ function createNewBoxNumbered(progressiveNumber, numberedBombs, boxNumber, numbe
     newBox.addEventListener('click', function bombcheck(){
         if(numberedBombs.includes(progressiveNumber)){
             this.classList.add('exploded');
+            loseDom.classList.remove('d-none');
+            finalScoreDom.classList.remove('d-none');
+            scoreDom.classList.add('d-none');
             clearEventListenerByClass('.box', gridContainerDom);
         } else {
             this.classList.add('selected');
             scoreNumberDom.innerHTML++;
             if(scoreNumberDom.innerHTML == (boxNumber - numberOfBombs)){
                 winDom.classList.remove('d-none');
+                finalScoreDom.classList.remove('d-none');
                 clearEventListenerByClass('.box', gridContainerDom);
+                scoreDom.classList.add('d-none');
             }
         }
         this.removeEventListener('click', bombcheck);
+        finalScoreDom.innerHTML = scoreNumberDom.innerHTML;
     });
     return newBox;
 }

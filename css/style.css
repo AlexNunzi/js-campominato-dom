@@ -89,8 +89,16 @@ main{
     height: 400px;
 }
 
+#lose{
+    font-size: 2rem;
+}
+
 #win{
     color: var(--win);
+    font-size: 2rem;
+}
+
+.finalScore{
     font-size: 3rem;
 }
 
