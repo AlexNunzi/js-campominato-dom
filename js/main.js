@@ -3,20 +3,21 @@ const gridContainerDom = document.querySelector('#gridContainer');
 const difficultSelectorDom = document.querySelector('#difficultSelector');
 const instructionDom = document.querySelector ('#instruction');
 
+
 console.log("Il valore di difficoltà selezionato è: " + difficultSelectorDom.value);
 
 
 
 
 startGameDom.addEventListener('click', function(){
-    console.log(gridContainerDom.innerHTML);
     gridContainerDom.innerHTML = '';
-    console.log(gridContainerDom.innerHTML);
 
     instructionDom.classList.add('d-none');
 
     let boxDimension = '';
     let boxNumber = 0;
+    let bombsArray = [];
+    const numberOfBombs = 16;
 
     switch(difficultSelectorDom.value){
         case '1':
@@ -37,6 +38,8 @@ startGameDom.addEventListener('click', function(){
     }
 
     createGameField(boxNumber, boxDimension);
+    bombsArray = createArrayOfNumber(numberOfBombs, 1, boxNumber);
+    console.log("L'array di bombe risultante dopo la generazione è: " + bombsArray);
 });
 
 
@@ -63,3 +66,31 @@ function createGameField(number, dimension){
     }
 }
 
+function randomNumber(min, max){
+    const number = Math.floor(Math.random() * (max - min + 1)) + min;
+    return number;
+}
+
+function createUniqueRandomNumber(arrayOfNumber, min, max){
+    let alreadyExist = true;
+    let newNumber;
+    while(alreadyExist){
+        newNumber = randomNumber(min, max);
+        if(!arrayOfNumber.includes(newNumber)){
+            alreadyExist = false;
+        }
+    }
+    return newNumber;
+}
+
+function createArrayOfNumber(arrayDimension, min, max){
+    stockingArray = [];
+    let newNumber;
+    while(stockingArray.length < arrayDimension){
+        newNumber = createUniqueRandomNumber(stockingArray, min, max);
+        console.log("Il nuovo numero generato è: " + newNumber);
+        stockingArray.push(newNumber);
+    }
+    console.log("L'array di numeri generato da createArrayOfNumber è: " + stockingArray);
+    return stockingArray;
+}
