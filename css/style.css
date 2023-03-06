@@ -10,6 +10,7 @@
     --mainBg: #7FFFD4;
     --grid-border: #000000;
     --selected-item: #00ffff;
+    --exploded-bomb: #ff0000;
 }
 
 /* REGOLE CSS ---------------------------------------- */
@@ -111,6 +112,10 @@ main{
 
 .selected{
     background-color: var(--selected-item);
+}
+
+.exploded{
+    background-color: var(--exploded-bomb);
 }
 
 /* FOOTER -------------------------------------------- */

@@ -37,9 +37,9 @@ startGameDom.addEventListener('click', function(){
             break;
     }
 
-    createGameField(boxNumber, boxDimension);
     bombsArray = createArrayOfNumber(numberOfBombs, 1, boxNumber);
     console.log("L'array di bombe risultante dopo la generazione è: " + bombsArray);
+    createGameField(boxNumber, boxDimension, bombsArray);
 });
 
 
@@ -47,20 +47,23 @@ startGameDom.addEventListener('click', function(){
 
 
 
-function createNewBoxNumbered(number){
+function createNewBoxNumbered(number, numberedBombs){
     const newBox = document.createElement('div');
     newBox.classList.add('box');
     newBox.innerHTML = `<div>${number}</div>`;
     newBox.addEventListener('click', function(){
-        console.log(number);
-        this.classList.add('selected');
+        if(numberedBombs.includes(number)){
+            this.classList.add('exploded');
+        } else {
+            this.classList.add('selected');
+        }
     });
     return newBox;
 }
 
-function createGameField(number, dimension){
+function createGameField(number, dimension, numberedBombs){
     for(i=1 ; i <= number ; i++){
-        const box = createNewBoxNumbered(i);
+        const box = createNewBoxNumbered(i, numberedBombs);
         box.classList.add(dimension);
         gridContainerDom.append(box);
     }
